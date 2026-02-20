@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolBet - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>🎰 SolBet</h1>
+            </div>
+
+            <nav>
+                <a href="#" class="active" data-section="ruleta">🎯 Ruleta</a>
+                <a href="#" data-section="historial">📊 Historial</a>
+                <a href="#" data-section="estadisticas">📈 Estadísticas</a>
+                <a href="#" data-section="perfil">👤 Perfil</a>
+            </nav>
+
+            <div class="user-info">
+                <div class="avatar" id="userAvatar"></div>
+                <h3 id="userName">Cargando...</h3>
+                <div class="balance">
+                    <span>Balance:</span>
+                    <strong id="userBalance">0 €</strong>
+                </div>
+                <button id="logoutBtn">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Ruleta Section -->
+            <section id="ruletaSection" class="section active">
+                <div class="section-header">
+                    <h2>Ruleta en Vivo</h2>
+                    <div class="live-badge">🔴 EN VIVO</div>
+                </div>
+
+                <div class="ruleta-frame-container">
+                    <iframe src="../ruleta-web/index.html" id="ruletaIframe"></iframe>
+                </div>
+
+                <div class="recent-results">
+                    <h3>Últimos Resultados</h3>
+                    <div class="results-grid" id="recentResults"></div>
+                </div>
+            </section>
+
+            <!-- Historial Section -->
+            <section id="historialSection" class="section">
+                <div class="section-header">
+                    <h2>Historial de Apuestas</h2>
+                    <div class="filters">
+                        <select id="filterType">
+                            <option value="all">Todas las apuestas</option>
+                            <option value="win">Ganadas</option>
+                            <option value="lose">Perdidas</option>
+                        </select>
+                        <input type="date" id="filterDate">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Apuesta</th>
+                                <th>Resultado</th>
+                                <th>Importe</th>
+                                <th>Ganancia</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Estadísticas Section -->
+            <section id="estadisticasSection" class="section">
+                <div class="section-header">
+                    <h2>Estadísticas</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Apostado</h3>
+                        <div class="stat-value" id="totalBetStat">0 €</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Ganado</h3>
+                        <div class="stat-value" id="totalWonStat">0 €</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Apuestas Ganadas</h3>
+                        <div class="stat-value" id="wonBetsStat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Porcentaje Éxito</h3>
+                        <div class="stat-value" id="successRateStat">0%</div>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <canvas id="profitChart" width="400" height="200"></canvas>
+                    <canvas id="betTypeChart" width="400" height="200"></canvas>
+                </div>
+            </section>
+
+            <!-- Perfil Section -->
+            <section id="perfilSection" class="section">
+                <div class="section-header">
+                    <h2>Mi Perfil</h2>
+                </div>
+
+                <div class="profile-container">
+                    <div class="profile-info">
+                        <div class="avatar-large" id="profileAvatar"></div>
+                        <h2 id="profileName"></h2>
+                        <p>Miembro desde: <span id="memberSince"></span></p>
+                    </div>
+
+                    <div class="profile-actions">
+                        <h3>Configuración</h3>
+                        <button id="depositBtn">Depositar Fondos</button>
+                        <button id="withdrawBtn">Retirar Fondos</button>
+                        <button id="changeAvatarBtn">Cambiar Avatar</button>
+                        <button id="changePasswordBtn">Cambiar Contraseña</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Avatar Selection Modal -->
+    <div id="avatarModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Selecciona tu Avatar</h2>
+            <div class="avatar-grid">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- WebSocket para actualizaciones en tiempo real -->
+    <script>
+        const ws = new WebSocket('ws://localhost:6001');
+    </script>
+
+    <script src="dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="eventListener.js"></script>
+</body>
+
+</html>
