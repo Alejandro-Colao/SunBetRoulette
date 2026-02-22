@@ -11,30 +11,30 @@ class AuthManager {
     }
 
     setupTabSwitching() {
-        // Setup sliding panel buttons
-        const signUpBtn = document.getElementById('sign-up-btn');
-        const signInBtn = document.getElementById('sign-in-btn');
-        const container = document.querySelector('.container');
-
-        signUpBtn.addEventListener('click', () => {
-            container.classList.add('sign-up-mode');
-            this.currentTab = 'register';
-        });
-
-        signInBtn.addEventListener('click', () => {
-            container.classList.remove('sign-up-mode');
-            this.currentTab = 'login';
-        });
+        // New design: tabs are handled inline in index.html.
+        // Sync currentTab when the tab buttons are clicked.
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        if (loginTab) loginTab.addEventListener('click', () => { this.currentTab = 'login'; });
+        if (registerTab) registerTab.addEventListener('click', () => { this.currentTab = 'register'; });
     }
 
     switchTab(tab) {
-        // This method is kept for compatibility but uses the new panel system
-        const container = document.querySelector('.container');
-
+        this.currentTab = tab;
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
         if (tab === 'register') {
-            container.classList.add('sign-up-mode');
+            registerTab?.classList.add('active');
+            loginTab?.classList.remove('active');
+            registerForm?.classList.add('active');
+            loginForm?.classList.remove('active');
         } else {
-            container.classList.remove('sign-up-mode');
+            loginTab?.classList.add('active');
+            registerTab?.classList.remove('active');
+            loginForm?.classList.add('active');
+            registerForm?.classList.remove('active');
         }
 
         this.currentTab = tab;
@@ -82,7 +82,7 @@ class AuthManager {
     }
 
     checkExistingSession() {
-        const token = localStorage.getItem('solbet_token');
+        const token = localStorage.getItem('sunbet_token');
         if (token) {
             // Redirigir al dashboard si ya hay sesión
             window.location.href = '../main-web/index.html';
@@ -282,8 +282,8 @@ class AuthManager {
             exp: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 días
         }));
 
-        localStorage.setItem('solbet_token', token);
-        localStorage.setItem('solbet_user', JSON.stringify(user));
+        localStorage.setItem('sunbet_token', token);
+        localStorage.setItem('sunbet_user', JSON.stringify(user));
 
         // También registrar en blockchain el login (opcional)
         this.logLoginToBlockchain(user);
@@ -310,28 +310,36 @@ class AuthManager {
         }
     }
 
-    showError(message) {
-        // Remove any existing error messages first
-        const existingError = document.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
+    showError(message, type = 'error') {
+        const isLogin = this.currentTab === 'login';
+        // Show in the correct alert div
+        const errEl = document.getElementById(isLogin ? 'loginError' : 'registerError');
+        if (errEl) {
+            errEl.textContent = message;
+            errEl.style.display = 'block';
+            setTimeout(() => { errEl.style.display = 'none'; }, 4000);
+            return;
         }
-
-        // Create new error message
+        // Fallback: inject a .error-message div (legacy)
+        const existingError = document.querySelector('.error-message');
+        if (existingError) existingError.remove();
         const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
+        errorDiv.className = 'error-message alert alert-error';
         errorDiv.textContent = message;
-
-        // Insert into the active form
-        const activeForm = this.currentTab === 'login'
+        const activeForm = isLogin
             ? document.getElementById('loginForm')
             : document.getElementById('registerForm');
+        activeForm?.insertBefore(errorDiv, activeForm.firstChild);
+        setTimeout(() => { errorDiv.remove(); }, 4000);
+    }
 
-        activeForm.insertBefore(errorDiv, activeForm.firstChild);
-
-        setTimeout(() => {
-            errorDiv.remove();
-        }, 3000);
+    showSuccess(message) {
+        const el = document.getElementById('registerSuccess');
+        if (el) {
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 4000);
+        }
     }
 }
 
