@@ -130,6 +130,7 @@ La cadena garantiza integridad mediante encadenamiento criptográfico.
 ## 👤 Autor
 
 Alejandro Colao Gómez
+
 Proyecto académico – DAW
 
 ---
