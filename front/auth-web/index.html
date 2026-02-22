@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SunBet - Acceder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+
+    <!-- Background layers -->
+    <canvas id="particleCanvas"></canvas>
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+
+    <div class="auth-wrapper">
+
+        <!-- LEFT – branding panel -->
+        <div class="brand-panel">
+            <!-- Floating casino symbols -->
+            <span class="float-symbol" style="top:12%;left:8%;  --dur:14s;--del:0s">🎰</span>
+            <span class="float-symbol" style="top:70%;left:5%;  --dur:11s;--del:-3s">♠️</span>
+            <span class="float-symbol" style="top:30%;left:82%; --dur:16s;--del:-6s">🎲</span>
+            <span class="float-symbol" style="top:80%;left:78%; --dur:12s;--del:-2s">💎</span>
+            <span class="float-symbol" style="top:55%;left:45%; --dur:18s;--del:-9s">🃏</span>
+            <span class="float-symbol" style="top:10%;left:55%; --dur:13s;--del:-5s">🌟</span>
+
+            <div class="brand-content">
+                <div class="brand-logo">
+                    <div class="logo-ring"><span>🎰</span></div>
+                </div>
+                <h1 class="brand-name" data-text="SunBet">SunBet</h1>
+                <p class="brand-tagline">Casino blockchain 100% transparente</p>
+
+                <ul class="brand-features">
+                    <li><span class="feat-icon">🔗</span><span>Resultados inmutables en blockchain</span></li>
+                    <li><span class="feat-icon">🎯</span><span>Ruleta 3D en tiempo real</span></li>
+                    <li><span class="feat-icon">🏆</span><span>Ranking global de jugadores</span></li>
+                    <li><span class="feat-icon">💸</span><span>Depósitos y retiros al instante</span></li>
+                </ul>
+
+                <div class="brand-stats">
+                    <div class="brand-stat">
+                        <strong>∞</strong>
+                        <span>Partidas</span>
+                    </div>
+                    <div class="brand-stat">
+                        <strong>100%</strong>
+                        <span>Justo</span>
+                    </div>
+                    <div class="brand-stat">
+                        <strong>P2P</strong>
+                        <span>Blockchain</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT – auth forms -->
+        <div class="form-panel">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" id="loginTab">Iniciar Sesión</button>
+                <button class="tab" id="registerTab">Crear Cuenta</button>
+            </div>
+
+            <!-- LOGIN -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-header">
+                    <h2>Bienvenido de vuelta</h2>
+                    <p>Ingresa tus credenciales para continuar</p>
+                </div>
+
+                <div id="loginError" class="alert alert-error" style="display:none;"></div>
+
+                <div class="field-group">
+                    <label for="loginEmail">Email</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="loginEmail" placeholder="tu@email.com" required autocomplete="email" />
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="label-row">
+                        <label for="loginPassword">Contraseña</label>
+                        <a href="#" class="link-small">¿La olvidaste?</a>
+                    </div>
+                    <div class="input-wrap">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required
+                            autocomplete="current-password" />
+                        <button type="button" class="toggle-pw" data-target="loginPassword">👁</button>
+                    </div>
+                </div>
+
+                <div class="remember-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" />
+                        <span class="checkbox-custom"></span>
+                        Recordarme
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span>Iniciar Sesión</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+
+                <div class="divider"><span>o continúa con</span></div>
+
+                <div class="social-row">
+                    <a href="#" class="social-btn google-login" title="Google">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                            <path fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                            <path fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                        <span>Google</span>
+                    </a>
+                    <a href="#" class="social-btn github-login" title="GitHub">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path
+                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </form>
+
+            <!-- REGISTER -->
+            <form id="registerForm" class="auth-form">
+                <div class="form-header">
+                    <h2>Crea tu cuenta</h2>
+                    <p>Empieza a jugar en la blockchain hoy mismo</p>
+                </div>
+
+                <div id="registerError" class="alert alert-error" style="display:none;"></div>
+                <div id="registerSuccess" class="alert alert-success" style="display:none;"></div>
+
+                <div class="field-group">
+                    <label for="registerName">Nombre completo</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="registerName" placeholder="Tu nombre" required autocomplete="name" />
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="registerEmail">Email</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="registerEmail" placeholder="tu@email.com" required
+                            autocomplete="email" />
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" required />
+                        <button type="button" class="toggle-pw" data-target="registerPassword">👁</button>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="registerConfirmPassword">Confirmar contraseña</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">🔑</span>
+                        <input type="password" id="registerConfirmPassword" placeholder="Repite tu contraseña"
+                            required />
+                    </div>
+                </div>
+
+                <label class="checkbox-label terms">
+                    <input type="checkbox" id="acceptTerms" required />
+                    <span class="checkbox-custom"></span>
+                    Acepto los <a href="#" class="link-inline">términos y condiciones</a>
+                </label>
+
+                <button type="submit" class="btn-primary">
+                    <span>Crear Cuenta</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /* ── Particle Canvas ── */
+        (function () {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, particles = [];
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // CSS fixed position
+            canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0;';
+
+            const COLORS = ['rgba(124,58,237,', 'rgba(236,72,153,', 'rgba(6,182,212,', 'rgba(167,139,250,'];
+
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * W;
+                    this.y = Math.random() * H;
+                    this.r = Math.random() * 1.5 + 0.3;
+                    this.vx = (Math.random() - 0.5) * 0.25;
+                    this.vy = (Math.random() - 0.5) * 0.25 - 0.05;
+                    this.alpha = Math.random() * 0.5 + 0.1;
+                    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+                    this.life = 0;
+                    this.maxLife = 180 + Math.random() * 200;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.life++;
+                    if (this.life > this.maxLife || this.x < 0 || this.x > W || this.y < 0) this.reset();
+                }
+                draw() {
+                    const fade = Math.min(this.life / 30, 1) * Math.min((this.maxLife - this.life) / 30, 1);
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color + (this.alpha * fade) + ')';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+            function loop() {
+                ctx.clearRect(0, 0, W, H);
+                for (const p of particles) { p.update(); p.draw(); }
+                // Draw connecting lines between nearby particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 80) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = 'rgba(124,58,237,' + (0.06 * (1 - dist / 80)) + ')';
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        })();
+
+        /* ── Tab switching ── */
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.classList.add('active');
+            registerForm.classList.remove('active');
+        });
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.classList.add('active');
+            loginForm.classList.remove('active');
+        });
+
+        /* ── Password toggle ── */
+        document.querySelectorAll('.toggle-pw').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.target);
+                input.type = input.type === 'password' ? 'text' : 'password';
+                btn.textContent = input.type === 'password' ? '👁' : '🙈';
+            });
+        });
+
+        /* ── Button ripple ── */
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px`;
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 700);
+            });
+        });
+
+        /* ── Input focus: magnetic label effect ── */
+        document.querySelectorAll('.input-wrap input').forEach(input => {
+            input.addEventListener('focus', () => {
+                const wrap = input.closest('.field-group');
+                if (wrap) wrap.style.transform = 'translateY(-1px)';
+            });
+            input.addEventListener('blur', () => {
+                const wrap = input.closest('.field-group');
+                if (wrap) wrap.style.transform = '';
+            });
+        });
+    </script>
+
+    <script src="./auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunBet - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-wrapper">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🎰</div>
+                <h1>SunBet</h1>
+                <span class="logo-sub">Casino Blockchain</span>
+            </div>
+
+            <nav>
+                <a href="#" class="active" data-section="ruleta">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-label">Ruleta</span>
+                </a>
+                <a href="#" data-section="historial">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Historial</span>
+                </a>
+                <a href="#" data-section="estadisticas">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-label">Estadísticas</span>
+                </a>
+                <a href="#" data-section="ranking">
+                    <span class="nav-icon">🏆</span>
+                    <span class="nav-label">Ranking</span>
+                </a>
+                <a href="#" data-section="perfil">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-label">Perfil</span>
+                </a>
+            </nav>
+
+            <div class="user-info">
+                <div class="user-card">
+                    <div class="avatar" id="userAvatar"></div>
+                    <div class="user-details">
+                        <h3 id="userName">Cargando...</h3>
+                        <div class="balance-chip">
+                            <span class="balance-label">💰</span>
+                            <strong id="userBalance">0 €</strong>
+                        </div>
+                    </div>
+                </div>
+                <button id="logoutBtn">
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- ── Ruleta Section ── -->
+            <section id="ruletaSection" class="section active">
+                <div class="section-header">
+                    <div>
+                        <h2>Ruleta en Vivo</h2>
+                        <p class="section-subtitle">Tira la ruleta y gana recompensas en la blockchain</p>
+                    </div>
+                    <div class="live-badge">🔴 EN VIVO</div>
+                </div>
+
+                <div class="ruleta-frame-container">
+                    <iframe src="../ruleta-web/index.html" id="ruletaIframe"></iframe>
+                </div>
+
+                <div class="recent-results">
+                    <div class="recent-results-header">
+                        <h3>⏱️ Últimos Resultados en Blockchain</h3>
+                        <span class="results-count" id="resultsCount">— tiradas</span>
+                    </div>
+                    <div class="results-grid" id="recentResults">
+                        <p class="empty-state">Conectando al blockchain...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Historial Section ── -->
+            <section id="historialSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Historial de Apuestas</h2>
+                        <p class="section-subtitle">Registro inmutable en la blockchain</p>
+                    </div>
+                    <div class="filters">
+                        <select id="filterType">
+                            <option value="all">Todas las apuestas</option>
+                            <option value="roulette">Solo Ruleta</option>
+                            <option value="win">✅ Ganadas</option>
+                            <option value="lose">❌ Perdidas</option>
+                            <option value="transaction">💸 Transacciones</option>
+                        </select>
+                        <input type="date" id="filterDate" title="Filtrar por día">
+                        <button id="clearFiltersBtn" class="btn-icon" title="Limpiar filtros">✕</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Resultado</th>
+                                <th>Apostado</th>
+                                <th>Ganancia Neta</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="6" class="empty-state">Cargando historial desde blockchain...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ── Estadísticas Section ── -->
+            <section id="estadisticasSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Estadísticas</h2>
+                        <p class="section-subtitle">Análisis de tu rendimiento en la blockchain</p>
+                    </div>
+                    <button id="refreshStatsBtn" class="btn-secondary">🔄 Actualizar</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card accent-purple">
+                        <div class="stat-icon">🎲</div>
+                        <h3>Total Apostado</h3>
+                        <div class="stat-value" id="totalBetStat">0 €</div>
+                    </div>
+                    <div class="stat-card accent-blue">
+                        <div class="stat-icon">💰</div>
+                        <h3>Total Cobrado</h3>
+                        <div class="stat-value" id="totalWonStat">0 €</div>
+                    </div>
+                    <div class="stat-card accent-cyan">
+                        <div class="stat-icon">📊</div>
+                        <h3>Partidas G/T</h3>
+                        <div class="stat-value" id="wonBetsStat">0 / 0</div>
+                    </div>
+                    <div class="stat-card accent-amber">
+                        <div class="stat-icon">🎯</div>
+                        <h3>Tasa de Éxito</h3>
+                        <div class="stat-value" id="successRateStat">0%</div>
+                    </div>
+                    <div class="stat-card accent-green">
+                        <div class="stat-icon">💹</div>
+                        <h3>Beneficio Neto</h3>
+                        <div class="stat-value" id="netProfitStat">0 €</div>
+                    </div>
+                    <div class="stat-card accent-orange">
+                        <div class="stat-icon">🔥</div>
+                        <h3>Racha Máxima</h3>
+                        <div class="stat-value" id="maxStreakStat">0</div>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>📈 Curva de Beneficio Acumulado</h3>
+                        <p class="chart-subtitle">Evolución de tus ganancias partida a partida</p>
+                        <div class="chart-wrap">
+                            <canvas id="profitChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>🥧 Distribución de Apuestas</h3>
+                        <p class="chart-subtitle">Tipos de apuesta más utilizados</p>
+                        <div class="chart-wrap">
+                            <canvas id="betTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Ranking Section ── -->
+            <section id="rankingSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>🏆 Ranking Global</h2>
+                        <p class="section-subtitle">Los mejores jugadores de la blockchain</p>
+                    </div>
+                    <button id="refreshRankingBtn" class="btn-secondary">🔄 Actualizar</button>
+                </div>
+
+                <!-- Podium top 3 -->
+                <div class="podium-container" id="rankingPodium">
+                    <div class="podium-loading">Cargando datos de la blockchain...</div>
+                </div>
+
+                <!-- Full leaderboard table -->
+                <div class="table-container ranking-table-container">
+                    <div class="table-header-bar">
+                        <span>🎖️ Tabla Completa</span>
+                        <span class="players-count" id="playersCount">— jugadores</span>
+                    </div>
+                    <table id="rankingTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Jugador</th>
+                                <th>Partidas</th>
+                                <th>Ganadas</th>
+                                <th>Total Apostado</th>
+                                <th>Total Cobrado</th>
+                                <th>Beneficio Neto</th>
+                                <th>% Éxito</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTableBody">
+                            <tr>
+                                <td colspan="8" class="empty-state">Cargando ranking...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ── Perfil Section ── -->
+            <section id="perfilSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Mi Perfil</h2>
+                        <p class="section-subtitle">Configuración de tu cuenta</p>
+                    </div>
+                </div>
+
+                <div class="profile-container">
+                    <div class="profile-info">
+                        <div class="avatar-large" id="profileAvatar"></div>
+                        <h2 id="profileName"></h2>
+                        <p class="member-since">Miembro desde: <span id="memberSince">—</span></p>
+                        <div class="profile-balance">
+                            <span>Balance actual</span>
+                            <strong id="profileBalance">0 €</strong>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <h3>⚙️ Configuración</h3>
+                        <button id="depositBtn" class="profile-btn deposit">
+                            <span class="btn-emoji">💰</span>
+                            <div>
+                                <strong>Depositar Fondos</strong>
+                                <small>Añade dinero a tu cuenta</small>
+                            </div>
+                        </button>
+                        <button id="withdrawBtn" class="profile-btn withdraw">
+                            <span class="btn-emoji">💸</span>
+                            <div>
+                                <strong>Retirar Fondos</strong>
+                                <small>Retira tus ganancias</small>
+                            </div>
+                        </button>
+                        <button id="changeAvatarBtn" class="profile-btn avatar-btn">
+                            <span class="btn-emoji">🖼️</span>
+                            <div>
+                                <strong>Cambiar Avatar</strong>
+                                <small>Personaliza tu perfil</small>
+                            </div>
+                        </button>
+                        <button id="changePasswordBtn" class="profile-btn">
+                            <span class="btn-emoji">🔒</span>
+                            <div>
+                                <strong>Cambiar Contraseña</strong>
+                                <small>Actualiza tu seguridad</small>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Avatar Selection Modal -->
+    <div id="avatarModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>🖼️ Selecciona tu Avatar</h2>
+            <p class="modal-subtitle">Elige el avatar que mejor te represente</p>
+            <div class="avatar-grid">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js FIRST, then dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js"></script>
+
+    <script>
+        document.getElementById('clearFiltersBtn').addEventListener('click', () => {
+            document.getElementById('filterType').value = 'all';
+            document.getElementById('filterDate').value = '';
+            if (dashboard) dashboard._applyHistorialFilters();
+        });
+        document.getElementById('refreshStatsBtn').addEventListener('click', () => {
+            if (dashboard) dashboard.loadAll();
+        });
+        document.getElementById('refreshRankingBtn').addEventListener('click', () => {
+            if (dashboard) dashboard.loadAll();
+        });
+    </script>
+</body>
+
+</html>
